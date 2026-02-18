@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>致黎肖冉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 60px 40px;
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .heart {
+            color: #e91e63;
+            font-size: 80px;
+            animation: heartbeat 1.5s infinite;
+            margin: 20px 0;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            15% {
+                transform: scale(1.3);
+            }
+            30% {
+                transform: scale(1);
+            }
+            45% {
+                transform: scale(1.15);
+            }
+            60% {
+                transform: scale(1);
+            }
+        }
+
+        .message {
+            font-size: 1.4em;
+            color: #333;
+            line-height: 1.8;
+            margin: 30px 0;
+            opacity: 0;
+            animation: slideIn 1s ease-in forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .buttons {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-yes {
+            background: linear-gradient(45deg, #e91e63, #ff5722);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+        }
+
+        .btn-no {
+            background: linear-gradient(45deg, #9e9e9e, #757575);
+            color: white;
+        }
+
+        .btn-no:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(158, 158, 158, 0.4);
+        }
+
+        .response {
+            margin-top: 30px;
+            font-size: 1.5em;
+            color: #e91e63;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            min-height: 60px;
+        }
+
+        .flowers {
+            position: fixed;
+            font-size: 30px;
+            animation: fall linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .quote {
+            font-style: italic;
+            color: #666;
+            margin-top: 30px;
+            font-size: 1.1em;
+            opacity: 0;
+            animation: slideIn 1s ease-in forwards;
+            animation-delay: 1s;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .heart {
+                font-size: 60px;
+            }
+            .message {
+                font-size: 1.1em;
+            }
+            .container {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>黎肖冉</h1>
+        <div class="heart">❤️</div>
+        <div class="message">
+            <p>从遇见你的那一刻起，</p>
+            <p>我的世界便充满了色彩。</p>
+            <p>你是我心中最温柔的存在，</p>
+            <p>我想陪你走过每一个春夏秋冬。</p>
+            <p>黎肖冉，我喜欢你！</p>
+        </div>
+        <div class="quote">"遇见你，是我最美的意外"</div>
+        
+        <div class="buttons">
+            <button class="btn btn-yes" onclick="sayYes()">我愿意</button>
+            <button class="btn btn-no" onclick="sayNo()">还需要想想</button>
+        </div>
+        
+        <div class="response" id="response"></div>
+    </div>
+
+    <script>
+        // 创建飘落的花瓣
+        function createFlowers() {
+            const flowers = ['🌸', '🌹', '💐', '🌷', '💕', '💗'];
+            
+            for (let i = 0; i < 20; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flowers';
+                flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.top = -50 + 'px';
+                flower.style.animationDuration = Math.random() * 3 + 4 + 's';
+                flower.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(flower);
+            }
+        }
+
+        createFlowers();
+
+        let yesButtonClicks = 0;
+        const persuasionMessages = [
+            '再考虑一下嘛~ 💕',
+            '真的不想再想想吗？💝',
+            '我会对你很好的！💖',
+            '我们真的很适合呢！💗',
+            '给我一个机会好不好？💕',
+            '你确定不点我愿意吗？💝',
+            '再看看我愿意的按钮，它变大了哦~💖',
+            '你忍心拒绝我吗？💗',
+            '我愿意按钮已经这么大了，快点点吧！💕',
+            '最后的机会哦！💝',
+            '我知道你其实愿意的！💖',
+            '别害羞啦，快点点吧！💗',
+            '我会一直等你的！💕',
+            '你真的不考虑一下吗？💝',
+            '点我愿意吧，我会很开心的！💖',
+            '再点一下不愿意试试？我愿意会更大哦！💗',
+            '你真的要一直点不愿意吗？💕',
+            '我愿意按钮已经超级大了！💝',
+            '快点我愿意吧，求求你了~💖',
+            '我知道你心里有我！💗'
+        ];
+
+        function sayYes() {
+            const response = document.getElementById('response');
+            response.innerHTML = '🎉 太好了！我会一直对你好的！ 🎉';
+            response.style.opacity = '1';
+            
+            // 添加更多花瓣效果
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.className = 'flowers';
+                    flower.textContent = ['🌸', '🌹', '💐', '🌷', '💕', '💗', '✨'][Math.floor(Math.random() * 7)];
+                    flower.style.left = Math.random() * 100 + 'vw';
+                    flower.style.top = -50 + 'px';
+                    flower.style.animationDuration = Math.random() * 2 + 3 + 's';
+                    document.body.appendChild(flower);
+                }, i * 100);
+            }
+        }
+
+        function sayNo() {
+            const response = document.getElementById('response');
+            const yesButton = document.querySelector('.btn-yes');
+            
+            // 放大"我愿意"按钮
+            yesButtonClicks++;
+            const scale = 1 + (yesButtonClicks * 0.3);
+            yesButton.style.transform = `scale(${scale})`;
+            yesButton.style.transition = 'transform 0.3s ease';
+            
+            // 显示劝说文字
+            const messageIndex = (yesButtonClicks - 1) % persuasionMessages.length;
+            response.innerHTML = persuasionMessages[messageIndex];
+            response.style.opacity = '1';
+        }
+    </script>
+</body>
+</html>
